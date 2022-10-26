@@ -1,24 +1,28 @@
 var express = require('express');
 var router = express.Router();
+const book=require('../model/book_model');
 
 //Antaa kaikki kirjat
 router.get('/', 
     function(request, response) {
-        response.send('näytetään kirjat');
+        let data=book.getAllBooks();
+        response.send(data);
 });
 
 //Antaa yhden kirjan
 router.get('/:id',
     function(request, response){
         let id=request.params.id;
-        response.send('näytetään kirja, jonka id='+id);
+        let data=book.getOneBook(id);
+        response.send(data);
     }
 );
 
 //Lisää kirjan
 router.post('/',
     function(request,response){
-        response.send(request.body);
+        let data=book.addBook(request.body);
+        response.send(data);
     }
 );
 
@@ -26,7 +30,8 @@ router.post('/',
 router.put('/:id',
     function(request,response){
         let id=request.params.id;
-        response.send('päivitetään kirja '+id);
+        let data=book.updateBook(id);
+        response.send(data);
     }
 );
 
@@ -34,7 +39,8 @@ router.put('/:id',
 router.delete('/:id',
     function(request,response){
         let id=request.params.id;
-        response.send('poistetaan kirja '+id);
+        let data=book.deleteBook(id);
+        response.send(data);
     }
 );
 
