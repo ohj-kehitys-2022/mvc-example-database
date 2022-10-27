@@ -5,24 +5,45 @@ const book=require('../model/book_model');
 //Antaa kaikki kirjat
 router.get('/', 
     function(request, response) {
-        let data=book.getAllBooks();
-        response.send(data);
+        book.getAllBooks(function(err, dbResult){
+            if(err){
+                response.json(err);
+            }
+            else{
+                response.send(dbResult);
+            }
+
+        });
 });
 
 //Antaa yhden kirjan
 router.get('/:id',
     function(request, response){
         let id=request.params.id;
-        let data=book.getOneBook(id);
-        response.send(data);
+        console.log(id);
+        book.getOneBook(id, function(err,dbResult){
+            if(err){
+                response.json(err);
+            }
+            else{
+                response.send(dbResult);
+            }
+        });
     }
 );
 
 //Lisää kirjan
 router.post('/',
     function(request,response){
-        let data=book.addBook(request.body);
-        response.send(data);
+        book.addBook(request.body,function(err,dbResult){
+            if(err){
+                response.json(err);
+            }
+            else{
+                response.send(dbResult);
+            }
+        });
+
     }
 );
 
