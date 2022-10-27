@@ -1,0 +1,28 @@
+create database library;
+CREATE USER 'netuser'@'localhost' 
+IDENTIFIED WITH mysql_native_password BY 'netpass';
+
+GRANT ALL on library.* to 'netuser'@'localhost';
+
+use library;
+
+show tables;
+
+create table book(
+id_book int primary key auto_increment,
+name varchar(80),
+author varchar(50),
+isbn char(13)
+);
+
+insert into book (name,author,isbn)
+values('Rautatie','Juhani Aho','123-456-789-2');
+
+create table borrower(
+    id_borrower char(4) primary key,
+    fname varchar(50),
+    lname varchar(50),
+    password varchar(255)
+);
+
+insert into borrower values('a101','Teppo','Testi','pass01');
