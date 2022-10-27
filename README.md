@@ -28,9 +28,12 @@ IDENTIFIED WITH mysql_native_password BY 'netpass';
 GRANT ALL on library.* to 'netuser'@'localhost';
 </pre>
 
+## .env -tiedosto
 
+Tietokantayhteyttä varten, luo tiedosto nimeltään **.env** ja laita sinne muuttuja
+SQL_SERVER = 'mysql://netuser:netpass@localhost:3306/library'
 
-
+Ja .env kannattaa laittaa .gitignoreen
 
 
 
