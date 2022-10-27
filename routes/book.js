@@ -10,7 +10,7 @@ router.get('/',
                 response.json(err);
             }
             else{
-                response.send(dbResult);
+                response.json(dbResult);
             }
 
         });
@@ -26,7 +26,7 @@ router.get('/:id',
                 response.json(err);
             }
             else{
-                response.send(dbResult);
+                response.json(dbResult[0]);
             }
         });
     }
@@ -40,7 +40,7 @@ router.post('/',
                 response.json(err);
             }
             else{
-                response.send(dbResult);
+                response.json(dbResult);
             }
         });
 
@@ -51,8 +51,14 @@ router.post('/',
 router.put('/:id',
     function(request,response){
         let id=request.params.id;
-        let data=book.updateBook(id);
-        response.send(data);
+        book.updateBook(id,request.body,function(err,dbResult){
+            if(err){
+                response.json(err);
+            }
+            else{
+                response.json(dbResult.affectedRows);
+            }
+        });
     }
 );
 
@@ -60,8 +66,14 @@ router.put('/:id',
 router.delete('/:id',
     function(request,response){
         let id=request.params.id;
-        let data=book.deleteBook(id);
-        response.send(data);
+        book.deleteBook(id,function(err,dbResult){
+            if(err){
+                response.json(err);
+            }
+            else{
+                response.json(dbResult);
+            }
+        });
     }
 );
 

@@ -11,11 +11,11 @@ const book={
         return db.query('insert into book(name,author,isbn) values(?,?,?)',
         [insertData.name, insertData.author, insertData.isbn],callback);
     },
-    updateBook:function(id){
-        return 'Model päivittää kirjan '+id;
+    updateBook:function(id,updateData,callback){
+        return db.query('update book set name=?, author=?, isbn=? where id_book=?',[updateData.name, updateData.author, updateData.isbn, id],callback);
     },
-    deleteBook:function(id){
-        return 'Model poistaa kirjan '+id;
+    deleteBook:function(id,callback){
+        return db.query('delete from book where id_book=?',[id],callback);
     }
 }
 
