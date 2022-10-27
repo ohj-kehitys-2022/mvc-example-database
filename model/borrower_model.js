@@ -23,6 +23,9 @@ const borrower = {
     },
     deleteBorrower: function (id, callback) {
         return db.query('delete from borrower where id_borrower=?', [id], callback);
+    },
+    checkPassword: function(id_borrower, callback) {
+        return db.query('select password from borrower where id_borrower=?',[id_borrower], callback);
     }
 }
 
