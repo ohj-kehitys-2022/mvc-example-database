@@ -1,12 +1,15 @@
+const db=require('../database');
+
 const book={
-    getAllBooks: function(){
-        return 'Model palauttaa kaikki kirjat';
+    getAllBooks: function(callback){
+        return db.query('select * from book',callback);
     },
-    getOneBook: function(id){
-        return 'Model palauttaa kirjan : '+id;
+    getOneBook: function(id,callback){
+        return db.query('select * from book where id_book=?',[id],callback);
     },
-    addBook: function(insertData){
-        return insertData;
+    addBook: function(insertData,callback){
+        return db.query('insert into book(name,author,isbn) values(?,?,?)',
+        [insertData.name, insertData.author, insertData.isbn],callback);
     },
     updateBook:function(id){
         return 'Model päivittää kirjan '+id;

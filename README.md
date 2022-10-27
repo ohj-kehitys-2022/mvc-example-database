@@ -2,7 +2,7 @@
 
 ## Tietokanta 
 
-Voit luodan tietokannan suorittamalla seuraavat SQL-koodit
+Voit luoda tietokannan suorittamalla seuraavat SQL-koodit
 <pre>
 create database library;
 use library;
@@ -31,8 +31,9 @@ GRANT ALL on library.* to 'netuser'@'localhost';
 ## .env -tiedosto
 
 Tietokantayhteyttä varten, luo tiedosto nimeltään **.env** ja laita sinne muuttuja
+<pre>
 SQL_SERVER = 'mysql://netuser:netpass@localhost:3306/library'
-
+</pre>
 Ja .env kannattaa laittaa .gitignoreen
 
 
