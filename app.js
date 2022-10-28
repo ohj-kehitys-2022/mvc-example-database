@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -13,6 +14,7 @@ var loginRouter = require('./routes/login');
 
 var app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
