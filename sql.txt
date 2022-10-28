@@ -28,3 +28,15 @@ create table borrower(
 insert into borrower values('a101','Teppo','Testi','pass01');
 
 alter table borrower add column image_name varchar(255);
+
+create table borrows(
+    id_borrows int primary key auto_increment,
+    id_borrower char(4),
+    id_book int,
+    borrow_date date default (current_date),
+    return_date date,
+    foreign key (id_borrower) references borrower(id_borrower)
+        on delete restrict on update cascade,
+    foreign key (id_book) references book(id_book)
+        on delete restrict on update restrict
+);
