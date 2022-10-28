@@ -9,10 +9,10 @@ const borrower = {
     getOneBorrower: function (id, callback) {
         return db.query('select * from borrower where id_borrower=?', [id], callback);
     },
-    addBorrower: function (insertData, callback) {
+    addBorrower: function (insertData,filename, callback) {
         bcrypt.hash(insertData.password, saltRounds, function (err, hashedPassword) {
-            return db.query('insert into borrower values(?,?,?,?)',
-                [insertData.id_borrower, insertData.fname, insertData.lname, hashedPassword], callback);
+            return db.query('insert into borrower values(?,?,?,?,?)',
+                [insertData.id_borrower, insertData.fname, insertData.lname, hashedPassword, filename], callback);
         });
     },
     updateBorrower: function (id, updateData, callback) {
