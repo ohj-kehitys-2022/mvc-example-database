@@ -26,3 +26,5 @@ create table borrower(
 );
 
 insert into borrower values('a101','Teppo','Testi','pass01');
+
+alter table borrower add column image_name varchar(255);

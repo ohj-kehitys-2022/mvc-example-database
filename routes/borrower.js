@@ -1,11 +1,29 @@
 var express = require('express');
 var router = express.Router();
-const Borrower=require('../model/borrower_model');
+const borrower=require('../model/borrower_model');
+
+var path = require('path');
+
+const filePath = path.join(__dirname, '../public/images/');
+const multer  = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, filePath)
+  },
+  filename: function (req, file, cb) {
+
+      cb(null,  file.originalname );
+
+  }
+});
+
+const upload = multer({ storage: storage})
 
 //Antaa kaikki lainaajat
 router.get('/', 
     function(request, response) {
-        Borrower.getAllBorrowers(function(err, dbResult){
+        borrower.getAllBorrowers(function(err, dbResult){
             if(err){
                 response.json(err);
             }
@@ -21,7 +39,7 @@ router.get('/:id',
     function(request, response){
         let id=request.params.id;
         console.log(id);
-        Borrower.getOneBorrower(id, function(err,dbResult){
+        borrower.getOneBorrower(id, function(err,dbResult){
             if(err){
                 response.json(err);
             }
@@ -33,9 +51,10 @@ router.get('/:id',
 );
 
 //Lisää lainaajan
-router.post('/',
+router.post('/',upload.single('file'),
     function(request,response){
-        Borrower.addBorrower(request.body,function(err,dbResult){
+        console.log(request.file.filename);
+        borrower.addBorrower(request.body,request.file.filename,function(err,dbResult){
             if(err){
                 response.json(err);
             }
@@ -51,7 +70,7 @@ router.post('/',
 router.put('/:id',
     function(request,response){
         let id=request.params.id;
-        Borrower.updateBorrower(id,request.body,function(err,dbResult){
+        borrower.updateBorrower(id,request.body,function(err,dbResult){
             if(err){
                 response.json(err);
             }
@@ -66,7 +85,7 @@ router.put('/:id',
 router.delete('/:id',
     function(request,response){
         let id=request.params.id;
-        Borrower.deleteBorrower(id,function(err,dbResult){
+        borrower.deleteBorrower(id,function(err,dbResult){
             if(err){
                 response.json(err);
             }
