@@ -11,6 +11,7 @@ var indexRouter = require('./routes/index');
 var booksRouter = require('./routes/book');
 var borrowersRouter = require('./routes/borrower');
 var loginRouter = require('./routes/login');
+var borrowRouter = require('./routes/borrow');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(authenticateToken);
 //SUOJATUT ENDPOINTIT
 app.use('/book', booksRouter);
 app.use('/borrower', borrowersRouter);
+app.use('/borrow', borrowRouter);
 
 
 

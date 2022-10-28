@@ -40,3 +40,6 @@ create table borrows(
     foreign key (id_book) references book(id_book)
         on delete restrict on update restrict
 );
+
+insert into borrows(id_borrower,id_book,return_date)
+values('a101',1,'2022-11-14');
