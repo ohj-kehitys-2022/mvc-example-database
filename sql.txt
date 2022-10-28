@@ -40,3 +40,15 @@ create table borrows(
     foreign key (id_book) references book(id_book)
         on delete restrict on update restrict
 );
+
+insert into borrows(id_borrower,id_book,return_date)
+values('a101',1,'2022-11-14');
+
+select id_borrows,id_borrower,id_book,DATE_FORMAT(borrow_date,"%d.%m.%Y") as 'borrow_date',
+DATE_FORMAT(return_date,"%d.%m.%Y") as 'return_date'
+from borrows;
+
+select fname, lname, name, DATE_FORMAT(borrow_date,"%d.%m.%Y") as 'borrow_date',
+DATE_FORMAT(return_date,"%d.%m.%Y") as 'return_date'
+from borrower inner join borrows on borrower.id_borrower=borrows.id_borrower
+inner join book on book.id_book=borrows.id_book;
