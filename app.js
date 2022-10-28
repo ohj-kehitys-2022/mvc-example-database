@@ -12,6 +12,7 @@ var booksRouter = require('./routes/book');
 var borrowersRouter = require('./routes/borrower');
 var loginRouter = require('./routes/login');
 var borrowRouter = require('./routes/borrow');
+var borrowdetailRouter = require('./routes/borrowdetail');
 
 var app = express();
 
@@ -26,11 +27,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 
-app.use(authenticateToken);
+//app.use(authenticateToken);
 //SUOJATUT ENDPOINTIT
 app.use('/book', booksRouter);
 app.use('/borrower', borrowersRouter);
 app.use('/borrow', borrowRouter);
+app.use('/borrowdetail', borrowdetailRouter);
 
 
 

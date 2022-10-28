@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-const Borrow=require('../model/borrow_model');
+const borrow=require('../model/borrow_model');
 
 //Antaa kaikki lainat
 router.get('/', 
     function(request, response) {
-        Borrow.getAllBorrows(function(err, dbResult){
+        borrow.getAllBorrows(function(err, dbResult){
             if(err){
                 response.json(err);
             }
@@ -21,7 +21,7 @@ router.get('/:id',
     function(request, response){
         let id=request.params.id;
         console.log(id);
-        Borrow.getOneBorrow(id, function(err,dbResult){
+        borrow.getOneBorrow(id, function(err,dbResult){
             if(err){
                 response.json(err);
             }
@@ -35,7 +35,7 @@ router.get('/:id',
 //Lisää lainan
 router.post('/',
     function(request,response){
-        Borrow.addBorrow(request.body,function(err,dbResult){
+        borrow.addBorrow(request.body,function(err,dbResult){
             if(err){
                 response.json(err);
             }
@@ -51,7 +51,7 @@ router.post('/',
 router.put('/:id',
     function(request,response){
         let id=request.params.id;
-        Borrow.updateBorrow(id,request.body,function(err,dbResult){
+        borrow.updateBorrow(id,request.body,function(err,dbResult){
             if(err){
                 response.json(err);
             }
@@ -66,7 +66,7 @@ router.put('/:id',
 router.delete('/:id',
     function(request,response){
         let id=request.params.id;
-        Borrow.deleteBorrow(id,function(err,dbResult){
+        borrow.deleteBorrow(id,function(err,dbResult){
             if(err){
                 response.json(err);
             }
