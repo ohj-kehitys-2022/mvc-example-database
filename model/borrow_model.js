@@ -26,6 +26,9 @@ const borrow={
     },
     getBorrowedData:function(callback){
         return db.query('select fname, lname, name, DATE_FORMAT(borrow_date,"%d.%m.%Y") as "borrow_date",DATE_FORMAT(return_date,"%d.%m.%Y") as "return_date" from borrower inner join borrows on borrower.id_borrower=borrows.id_borrower inner join book on book.id_book=borrows.id_book',callback);
+    },
+    getOneBorrowedData:function(id,callback){
+        return db.query('select fname, lname, name, DATE_FORMAT(borrow_date,"%d.%m.%Y") as "borrow_date",DATE_FORMAT(return_date,"%d.%m.%Y") as "return_date" from borrower inner join borrows on borrower.id_borrower=borrows.id_borrower inner join book on book.id_book=borrows.id_book where borrower.id_borrower=?',[id],callback);
     }
 }
 

@@ -15,5 +15,18 @@ router.get('/',
 
         });
 });
+router.get('/:id', 
+    function(request, response) {
+        let id=request.params.id;
+        borrow.getOneBorrowedData(id,function(err, dbResult){
+            if(err){
+                response.json(err);
+            }
+            else{
+                response.json(dbResult);
+            }
+
+        });
+});
 
 module.exports=router;

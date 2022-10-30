@@ -19,8 +19,8 @@ router.post('/',
               bcrypt.compare(loginPassword,dbResult[0].password, function(err,compareResult) {
                 if(compareResult) {
                   console.log("succes");
-                  const token = generateAccessToken({ username: id_borrower });
-                  response.send(token);
+                  generateAccessToken(response,{ username: id_borrower});
+                  response.send(true);
                 }
                 else {
                     console.log("wrong password");
@@ -44,9 +44,16 @@ router.post('/',
   }
 );
 
-function generateAccessToken(username) {
+function generateAccessToken(response,username) {
   dotenv.config();
-  return jwt.sign(username, process.env.MY_TOKEN, { expiresIn: '1800s' });
+  const expiration=100;
+  const token= jwt.sign(username, process.env.MY_TOKEN, { expiresIn: '60s' });
+  console.log("token = "+token);
+  return response.cookie('token',token,{
+    expiration:expiration,
+    secure: false, // set to true if your using https
+    httpOnly: true,
+  });
 }
 
 module.exports=router;

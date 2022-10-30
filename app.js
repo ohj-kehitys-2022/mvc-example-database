@@ -16,7 +16,20 @@ var borrowdetailRouter = require('./routes/borrowdetail');
 
 var app = express();
 
-app.use(cors());
+//app.use(cors());
+app.use(
+  cors({
+    origin: [
+      'http://localhost',
+      'http://localhost:80',
+    ],
+    methods: ['GET', 'PUT', 'POST'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
+    credentials: true,
+    maxAge: 600,
+    exposedHeaders: ['*', 'Authorization', ]
+  })
+);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -27,13 +40,30 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 
-app.use(authenticateToken);
+//app.use(authenticateToken);
+app.use(verifyToken);
 //SUOJATUT ENDPOINTIT
 app.use('/book', booksRouter);
 app.use('/borrower', borrowersRouter);
 app.use('/borrow', borrowRouter);
 app.use('/borrowdetail', borrowdetailRouter);
 
+function verifyToken(req, res, next) {
+  const token = req.cookies.token || '';
+  console.log("here :  "+token);
+  try {
+    if (!token) {
+      return res.status(401).json('You need to Login')
+    }
+    const decrypt = jwt.verify(token, process.env.MY_TOKEN);
+    req.user = {
+      username: decrypt.username,
+    };
+    next();
+  } catch (err) {
+    return res.status(500).json(err.toString());
+  }
+};
 
 
 function authenticateToken(req, res, next) {
